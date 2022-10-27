@@ -147,6 +147,7 @@ bool isDushky(char x) {
 
 
 string parser(string input) {
+    input = "(" + input + ")";
     int itter = 0;
 
     for (int i = 0; i < input.length(); i++) {
@@ -203,6 +204,7 @@ string parser(string input) {
                 }
 
             }
+            i--;
 
             parse[v] = chyslo;
         }
