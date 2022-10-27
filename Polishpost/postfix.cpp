@@ -58,20 +58,7 @@ double stepin(double a, double b) {
 
 
 
-void toPostfix(string infix) {
-    infix = '(' + infix + ')';
-    int l = infix.size();
-    stack<char> stack;
-    string output;
 
-    for (int i = 0; i < l; i++) {
-        if (isdigit(infix[i])) {
-
-        }
-    }
-    
-
-}
 bool isOperator(char x) {
     if (x == '+') {
         return true;
@@ -218,9 +205,61 @@ string* parser(string input) {
         v++;
     }
 
-    for (int i = 0; i < itter; i++) {
+    /*for (int i = 0; i < itter; i++) {
         cout << parse[i] << endl;
-    }
+    }*/
 
     return parse;
+}
+void toPostfix(string* parse) {
+    int inputLength = stoi(parse[0]);
+    int postlen=0;
+    string temp;
+    for (int i = 1; i < inputLength; i++) {
+        if (isDushky((parse[i])[0])==false) {
+            
+            postlen++;
+
+        }
+    }
+    string* output = new string[postlen];
+    stack <string> stack;
+    int lich = 0;
+    for (int i = 1; i < inputLength; i++) {
+        if (parse[i] == "(") {
+            stack.push("(");
+        }
+        if (parse[i] == ")") {
+            while (stack.top()!="(")
+            {
+                output[lich] = stack.top();
+                stack.pop();
+                lich++;
+            }
+            stack.pop();
+            if (isFunction(stack.top(),0)) {
+                output[lich] = stack.top();
+                stack.pop();
+                lich++;
+            }
+        }
+        if (isOperand((parse[i])[0])) {
+            output[lich] = parse[i];
+            lich++;
+        }
+        if (isFunction(parse[i], 0)) {
+            stack.push(parse[i]);
+
+        }
+        if (isOperator((parse[i])[0])) {
+           
+
+        }
+    }
+    for (int i = 0; i < lich; i++) {
+        cout << output[i] << " ";
+    }
+
+   
+
 }
