@@ -11,7 +11,7 @@ bool isOperator(char x);
 bool isOperand(char x);
 bool isDushky(char x);
 bool isFunction(string rivny, int i);
-void toPostfix(string* rivny);
+string* toPostfix(string* rivny);
 double plus(double a, double b);
 double minus(double a, double b);
 double dobutok(double a, double b);
