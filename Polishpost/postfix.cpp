@@ -146,7 +146,7 @@ bool isDushky(char x) {
 }
 
 
-string parser(string input) {
+string* parser(string input) {
     input = "(" + input + ")";
     int itter = 0;
 
@@ -174,9 +174,12 @@ string parser(string input) {
             itter++;
         }
     }
-    int v = 0;
+    itter++;
+   
+    int v = 1;
     string* parse = new string[itter];
-    for (int i = 0; i < input.length(); i++) {
+    parse[0] = to_string(itter-1);
+    for (int i =0; i < input.length(); i++) {
         if (isOperator(input[i])) {
             parse[v] = input[i];
         }
@@ -219,5 +222,5 @@ string parser(string input) {
         cout << parse[i] << endl;
     }
 
-    return input;
+    return parse;
 }

@@ -9,8 +9,9 @@ int main()
     string input;
     getline(cin, input);
 
-
-    parser(input);
+    string* a;
+    a=parser(input);
+    
 
 
 
