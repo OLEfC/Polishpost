@@ -20,7 +20,16 @@
 * 
 * 
 */
-
+int getPriority(char C)
+{
+    if (C == '-' || C == '+')
+        return 1;
+    else if (C == '*' || C == '/')
+        return 2;
+    else if (C == '^')
+        return 3;
+    return 0;
+}
 double synus(double a) {
     return sin(a);
 }
@@ -205,14 +214,15 @@ string* parser(string input) {
         v++;
     }
 
-    /*for (int i = 0; i < itter; i++) {
+    for (int i = 0; i < itter; i++) {
         cout << parse[i] << endl;
-    }*/
+    }
 
     return parse;
 }
 void toPostfix(string* parse) {
-    int inputLength = stoi(parse[0]);
+    int inputLength = stoi(parse[0])+1;
+    cout << inputLength << endl << endl;
     int postlen=0;
     string temp;
     for (int i = 1; i < inputLength; i++) {
@@ -222,10 +232,13 @@ void toPostfix(string* parse) {
 
         }
     }
+    cout << postlen << endl;
     string* output = new string[postlen];
     stack <string> stack;
     int lich = 0;
     for (int i = 1; i < inputLength; i++) {
+        cout<<i<<")" << parse[i] << endl;
+
         if (parse[i] == "(") {
             stack.push("(");
         }
@@ -237,11 +250,14 @@ void toPostfix(string* parse) {
                 lich++;
             }
             stack.pop();
-            if (isFunction(stack.top(),0)) {
-                output[lich] = stack.top();
-                stack.pop();
-                lich++;
+            if (stack.empty() == false) {
+                if (isFunction(stack.top(), 0)) {
+                    output[lich] = stack.top();
+                    stack.pop();
+                    lich++;
+                }
             }
+           
         }
         if (isOperand((parse[i])[0])) {
             output[lich] = parse[i];
@@ -252,6 +268,16 @@ void toPostfix(string* parse) {
 
         }
         if (isOperator((parse[i])[0])) {
+            
+            while ((isOperator(stack.top()[0])==true)||(getPriority(stack.top()[0])> getPriority((parse[i])[0]))/* || ()*/) {
+                cout << "tyt";
+                output[lich] = stack.top();
+                stack.pop();
+                lich++;
+
+
+            }
+            stack.push(parse[i]);
            
 
         }

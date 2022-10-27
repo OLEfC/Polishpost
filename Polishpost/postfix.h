@@ -16,6 +16,6 @@ double plus(double a, double b);
 double minus(double a, double b);
 double dobutok(double a, double b);
 double chastka(double a, double b);
-string* parser(string input);
-string infixtoPostfix(string input);
+string* parser(string input); 
+int getPriority(char C);
 
