@@ -123,11 +123,19 @@ bool isFunction(string rivny, int i) {
 
 }
 bool isOperand(char x) {
+    
     if (x == 'x') {
+        
+        return true;
+
+    }
+    if (x == '.') {
+
         return true;
 
     }
     if (isdigit(x)) {
+        
         return true;
 
     }
@@ -290,8 +298,9 @@ string* toPostfix(string* parse) {
         }
         if (isOperator((parse[i])[0])) {
             
-            while ((isOperator(stack.top()[0])==true)||(getPriority(stack.top()[0])> getPriority((parse[i])[0]))/* || ()*/) {
-                
+            while ((isFunction(stack.top(), 0) ==true)||(getPriority(stack.top()[0])> getPriority((parse[i])[0]))/* || ()*/) {
+               
+
                 output[lich] = stack.top();
                 stack.pop();
                 lich++;
@@ -303,10 +312,10 @@ string* toPostfix(string* parse) {
 
         }
     }
-    for (int i = 1; i < lich; i++) {
+    /*for (int i = 1; i < lich; i++) {
         cout << output[i] << " ";
     }
-
+    */
    
     return output;
 
