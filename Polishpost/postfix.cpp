@@ -360,27 +360,55 @@ double calculator(string* output, double x) {
     stack <string> stack;
     int outputLength = stoi(output[0]) + 1;
     //cout << outputLength << endl << endl;
+    
     for (int i = 1; i < outputLength; i++) {
         
         if (isOperand((output[i])[0])) {
             stack.push(output[i]);
         }
         else if (isOperator((output[i])[0])) {
-            double b = stod(stack.top());
-            stack.pop();
-            double a = stod(stack.top());
-            stack.pop();
+            double a, b;
+            if (stack.top() == "x") {
+                b = x;
+                stack.pop();
 
-            
-            string oper= to_string(whatoperator((output[i])[0], a, b));
+            }
+            else {
+                b = stod(stack.top());
+                stack.pop();
+            }
+            if (stack.top() == "x") {
+                a = x;
+                stack.pop();
+
+            }
+            else {
+                a = stod(stack.top());
+                stack.pop();
+            }
+
+
+
+
+
+            string oper = to_string(whatoperator((output[i])[0], a, b));
             stack.push(oper);
 
 
 
         }
         else {
-            double a = stod(stack.top());
-            stack.pop();
+            double a;
+            if (stack.top() == "x") {
+                a = x;
+                stack.pop();
+
+            }
+            else {
+                a = stod(stack.top());
+                stack.pop();
+            }
+
             string temp = output[i];
             string oper = to_string(whatfun(temp, a));
             stack.push(oper);
