@@ -18,4 +18,8 @@ double dobutok(double a, double b);
 double chastka(double a, double b);
 string* parser(string input); 
 int getPriority(char C);
+double calculator(string* output, double x);
+double whatoperator(char oper, double a, double b);
+double whatfun(string oper, double a);
+
 

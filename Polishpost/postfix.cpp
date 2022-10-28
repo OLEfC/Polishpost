@@ -85,6 +85,10 @@ bool isOperator(char x) {
         return true;
 
     }
+    if (x == '^') {
+        return true;
+
+    }
 
     
     return false;
@@ -192,26 +196,38 @@ string* parser(string input) {
             }
             i = i + 2;
         }
+        
         else if (isOperand(input[i])) {
+           
             string chyslo = "";
-
-
-            while (isOperand(input[i])) {
-                if (i < input.length()) {
-                    chyslo = chyslo + input[i];
-                    i++;
-                }
+            if (isdigit(isOperand(input[i]))) {
+                
+                parse[v] = input[i];
 
             }
-            i--;
 
-            parse[v] = chyslo;
+            else {
+                while (isOperand(input[i])) {
+
+
+                    if (i < input.length()) {
+                        chyslo = chyslo + input[i];
+                        i++;
+                    }
+
+                }
+                i--;
+
+                parse[v] = chyslo;
+            }
+           
         }
         else if (isDushky(input[i])) {
             parse[v] = input[i];
         }
 
         v++;
+        
     }
 
    /*for (int i = 0; i < itter; i++) {
@@ -233,9 +249,14 @@ string* toPostfix(string* parse) {
         }
     }
     //cout << postlen << endl;
+    postlen++;
+
+    
+   
     string* output = new string[postlen];
+    output[0] = to_string(postlen - 1);
     stack <string> stack;
-    int lich = 0;
+    int lich = 1;
     for (int i = 1; i < inputLength; i++) {
        // cout<<i<<")" << parse[i] << endl;
 
@@ -282,10 +303,87 @@ string* toPostfix(string* parse) {
 
         }
     }
-    for (int i = 0; i < lich; i++) {
+    for (int i = 1; i < lich; i++) {
         cout << output[i] << " ";
     }
 
    
     return output;
+
+}
+
+double whatoperator(char oper,double a,double b) {
+    if (oper == '+') {
+        return(a + b);
+
+    }
+    if (oper == '-') {
+        return(a - b);
+
+    }
+    if (oper == '/') {
+        return(a / b);
+
+    }
+    if (oper == '*') {
+        return(a * b);
+
+    }
+    if (oper == '^') {
+        return(pow(a,b));
+
+    }
+
+}
+double whatfun(string oper, double a) {
+    if (oper == "sin") {
+        return(sin(a));
+    }
+    if (oper == "cos") {
+        return(cos(a));
+    }
+    if (oper == "abs") {
+        return(abs(a));
+    }
+}
+
+double calculator(string* output, double x) {
+    stack <string> stack;
+    int outputLength = stoi(output[0]) + 1;
+    //cout << outputLength << endl << endl;
+    for (int i = 1; i < outputLength; i++) {
+        
+        if (isOperand((output[i])[0])) {
+            stack.push(output[i]);
+        }
+        else if (isOperator((output[i])[0])) {
+            double b = stod(stack.top());
+            stack.pop();
+            double a = stod(stack.top());
+            stack.pop();
+
+            
+            string oper= to_string(whatoperator((output[i])[0], a, b));
+            stack.push(oper);
+
+
+
+        }
+        else {
+            double a = stod(stack.top());
+            stack.pop();
+            string temp = output[i];
+            string oper = to_string(whatfun(temp, a));
+            stack.push(oper);
+
+        }
+
+
+
+    }
+
+    double result = stod(stack.top());
+
+
+    return result;
 }

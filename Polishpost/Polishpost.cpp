@@ -9,10 +9,12 @@ int main()
     string input;
     getline(cin, input);
 
-    string* a;
-    a=parser(input);
-    toPostfix(a);
-
+   string* a;
+   a= toPostfix(parser(input));;
+    
+    double x= calculator(a, 3);
+    cout << x << endl;
+    
 
 
     
